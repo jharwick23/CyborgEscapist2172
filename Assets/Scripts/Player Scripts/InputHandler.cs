@@ -58,20 +58,20 @@ public class InputHandler : MonoBehaviour
         }
 
         // Fire
-        if(_playerCombat != null && (_fireupAction || _firedownAction || _fireleftAction || _firerightAction))
+        if(_playerCombat != null && (_fireupAction != null || _firedownAction != null || _fireleftAction != null || _firerightAction != null))
         {
             // Single shot per click
             if (_fireupAction.WasPressedThisFrame()){
-                _playerCombat.Fire();
+                _playerCombat.Fire(PlayerCombat.FirePosition.Up);
             }
             if (_firedownAction.WasPressedThisFrame()){
-                _playerCombat.Fire();
+                _playerCombat.Fire(PlayerCombat.FirePosition.Down);
             }
             if (_fireleftAction.WasPressedThisFrame()){
-                _playerCombat.Fire();
+                _playerCombat.Fire(PlayerCombat.FirePosition.Left);
             }
             if (_firerightAction.WasPressedThisFrame()){
-                _playerCombat.Fire();
+                _playerCombat.Fire(PlayerCombat.FirePosition.Right);
             }
         }
     }

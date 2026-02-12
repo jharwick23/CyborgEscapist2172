@@ -13,6 +13,9 @@ public class PlayerCombat : MonoBehaviour
     [Header("Firing Settings")]
     [SerializeField] private float _timeBetweenFiring = 0.15f;
 
+    [Header("Player Animator")]
+    [SerializeField] private Animator _animator;
+
     // Runtime References
     private Gun weaponInRange;
     private Gun currentWeapon;
@@ -20,8 +23,17 @@ public class PlayerCombat : MonoBehaviour
 
     // Internal State
     private float _firetimer;
-    private Vector2 aimWorldPos;
+    private FirePosition _currentFacing = FirePosition.None;
+    private Vector3 _weaponHolderDefaultLocalPos;
 
+    // Enum for firing position
+    public enum FirePosition{
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    };
 
     void Awake()
     {
@@ -34,6 +46,10 @@ public class PlayerCombat : MonoBehaviour
         }
         if(weaponHolder == null){
             weaponHolder = transform.Find("WeaponHolder");
+            _weaponHolderDefaultLocalPos = weaponHolder.localPosition;
+        }
+        if(!_animator){
+            _animator = GetComponent<Animator>();
         }
     }
 
@@ -46,14 +62,35 @@ public class PlayerCombat : MonoBehaviour
     }
     
     // InputHandler calls this when Fire is pressed
-    public void Fire()
+    public void Fire(FirePosition firePos)
     {
         if(_firetimer > 0f) return;
 
         if(_bulletPrefab == null || currentWeapon == null) return;
 
-        // spawn bullet 
-        currentWeapon.Fire(_bulletPrefab);
+        Transform weaponHolder = transform.Find("WeaponHolder");
+
+        // Positions weapon holder object based on where player is shooting
+        if(_currentFacing != firePos){
+            weaponHolder.localPosition = _weaponHolderDefaultLocalPos;
+            if(firePos == FirePosition.Left){
+                weaponHolder.localPosition += new Vector3(-0.25f, 0f, 0f);
+            }
+            if(firePos == FirePosition.Right){
+                weaponHolder.localPosition += new Vector3(0.25f, 0f, 0f);
+            }
+            if(firePos == FirePosition.Up){
+                weaponHolder.localPosition += new Vector3(0f, 0.25f, 0f);
+            }
+            if(firePos == FirePosition.Down){
+                weaponHolder.localPosition += new Vector3(0f, -0.25f, 0f);
+            }
+
+            _currentFacing = firePos;
+        }
+
+        // Spawns bullets and sets timer so you cannot fire too fast
+        currentWeapon.Fire(_bulletPrefab, firePos);
 
         _firetimer = _timeBetweenFiring;
     }
@@ -116,5 +153,17 @@ public class PlayerCombat : MonoBehaviour
         currentWeapon.GetComponent<Collider2D>().enabled = true;
 
         currentWeapon = null;
+    }
+
+    // Return current fire position
+    public FirePosition GetCurrentFirePosition()
+    {
+        return _currentFacing;
+    }
+
+    // Set current fire position
+    public void SetCurrentFirePosition(FirePosition firePos)
+    {
+        _currentFacing = firePos;
     }
 }

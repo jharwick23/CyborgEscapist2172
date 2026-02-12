@@ -6,12 +6,19 @@ public class Gun : MonoBehaviour
     [Header("Weapon Setup")]
     [SerializeField] private Transform firePoint;
 
-    // Runtime References
-    private SpriteRenderer weaponSprite;
+    [Header("Gun Animator")]
+    [SerializeField] private Animator _gunanimator;
+
+    // Internal Variables
+    private Vector3 _firePointDefaultLocalPos;
 
     void Awake(){
-        if(weaponSprite == null){
-            weaponSprite = GetComponentInChildren<SpriteRenderer>();
+        if(!_gunanimator){
+            _gunanimator = GetComponent<Animator>();
+        }
+        if(firePoint == null){
+            firePoint = transform.Find("FirePoint");
+            _firePointDefaultLocalPos = firePoint.localPosition;
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,9 +38,41 @@ public class Gun : MonoBehaviour
     }
 
     // Fire weapon
-    public void Fire(GameObject bulletPrefab)
+    public void Fire(GameObject bulletPrefab, PlayerCombat.FirePosition firePos)
     {
         if(bulletPrefab == null || firePoint == null) return;
+
+        firePoint.localRotation = Quaternion.identity;
+        firePoint.localPosition = _firePointDefaultLocalPos;
+
+        // Sets sprite based on which direction player is shooting
+        // Rotates fire point so player fires in correct direction (Right is zero by default so no need to rotate)
+        // Changes fire point pos relative to the direction player is facing
+        switch(firePos){
+            case PlayerCombat.FirePosition.Up:
+                _gunanimator.SetFloat("DirectionX", 0);
+                _gunanimator.SetFloat("DirectionY", 1);
+                firePoint.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                firePoint.localPosition += new Vector3(0f, 0.2f, 0f);
+                break;
+            case PlayerCombat.FirePosition.Down:
+                _gunanimator.SetFloat("DirectionX", 0);
+                _gunanimator.SetFloat("DirectionY", -1);
+                firePoint.localRotation = Quaternion.Euler(0f, 0f, -90f);
+                firePoint.localPosition += new Vector3(0f, -0.2f, 0f);
+                break;
+            case PlayerCombat.FirePosition.Left:
+                _gunanimator.SetFloat("DirectionX", -1);
+                _gunanimator.SetFloat("DirectionY", 0);
+                firePoint.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                firePoint.localPosition += new Vector3(-0.2f, 0f, 0f);
+                break;
+            case PlayerCombat.FirePosition.Right:
+                _gunanimator.SetFloat("DirectionX", 1);
+                _gunanimator.SetFloat("DirectionY", 0);
+                firePoint.localPosition += new Vector3(0.2f, 0f, 0f);
+                break;
+        }
 
         Vector2 dir = firePoint.right;
 

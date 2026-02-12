@@ -28,6 +28,9 @@ public class BulletScript : MonoBehaviour
     // Enemy hit with bullet
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.gameObject.CompareTag("Player")){
+            return;
+        }
         if(other.gameObject.CompareTag("Enemy")){
             Destroy(other.gameObject);
         }
