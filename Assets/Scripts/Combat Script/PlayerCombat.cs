@@ -102,7 +102,6 @@ public class PlayerCombat : MonoBehaviour
         if(gun != null)
         {
             weaponInRange = gun;
-            Debug.Log("Weapon in range");
         }
     }
 
@@ -113,7 +112,6 @@ public class PlayerCombat : MonoBehaviour
         if(gun != null && weaponInRange == gun)
         {
             weaponInRange = null;
-            Debug.Log("Weapon left range");
         }
     }
 
@@ -127,7 +125,6 @@ public class PlayerCombat : MonoBehaviour
 
         if(weaponHolder.childCount > 0)
         {
-            Debug.Log("Already holding weapon");
             return;
         }
 
