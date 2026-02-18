@@ -16,6 +16,9 @@ public class PlayerCombat : MonoBehaviour
     [Header("Player Animator")]
     [SerializeField] private Animator _animator;
 
+    [Header("Player Movement")]
+    [SerializeField] private PlayerMovement playerMov;
+
     // Runtime References
     private Gun weaponInRange;
     private Gun currentWeapon;
@@ -25,6 +28,9 @@ public class PlayerCombat : MonoBehaviour
     private float _firetimer;
     private FirePosition _currentFacing = FirePosition.None;
     private Vector3 _weaponHolderDefaultLocalPos;
+
+    // Flags
+    private bool isEquipped = false;
 
     // Enum for firing position
     public enum FirePosition{
@@ -48,6 +54,10 @@ public class PlayerCombat : MonoBehaviour
         if(!_animator){
             _animator = GetComponent<Animator>();
         }
+        if(!playerMov)
+        {
+            playerMov = GetComponent<PlayerMovement>();
+        }
     }
 
     void Start(){
@@ -62,6 +72,15 @@ public class PlayerCombat : MonoBehaviour
         {
             _firetimer -= Time.deltaTime;
         } 
+
+        if(currentWeapon)
+        {
+            isEquipped = true;
+        }
+        else
+        {
+            isEquipped = false;
+        }
     }
     
     // InputHandler calls this when Fire is pressed
@@ -83,10 +102,10 @@ public class PlayerCombat : MonoBehaviour
                 weaponHolder.localPosition += new Vector3(0.25f, 0f, 0f);
             }
             if(firePos == FirePosition.Up){
-                weaponHolder.localPosition += new Vector3(0f, 0.25f, 0f);
+                weaponHolder.localPosition += new Vector3(0f, 0.5f, 0f);
             }
             if(firePos == FirePosition.Down){
-                weaponHolder.localPosition += new Vector3(0f, -0.25f, 0f);
+                weaponHolder.localPosition += new Vector3(0f, -0.5f, 0f);
             }
 
             _currentFacing = firePos;
@@ -96,6 +115,25 @@ public class PlayerCombat : MonoBehaviour
         currentWeapon.Fire(_bulletPrefab, firePos);
 
         _firetimer = _timeBetweenFiring;
+
+        Vector2 faceDir = Vector2.zero;
+
+        switch(firePos){
+            case FirePosition.Left:
+                faceDir = Vector2.left;
+                break;
+            case FirePosition.Right:
+                faceDir = Vector2.right;
+                break;
+            case FirePosition.Up:
+                faceDir = Vector2.up;
+                break;
+            case FirePosition.Down:
+                faceDir = Vector2.down;
+                break;
+        }
+
+        playerMov.SetFacingDirection(faceDir);
     }
 
     // Check if weapon is in range
@@ -165,5 +203,10 @@ public class PlayerCombat : MonoBehaviour
     public void SetCurrentFirePosition(FirePosition firePos)
     {
         _currentFacing = firePos;
+    }
+
+    public bool GetIsEquippedFlag()
+    {
+        return isEquipped;
     }
 }

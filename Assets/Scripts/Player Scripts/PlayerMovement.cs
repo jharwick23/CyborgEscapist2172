@@ -6,9 +6,14 @@ public class PlayerMovement : MonoBehaviour
     // Movement Variables
     [SerializeField] private float moveSpeed = 7.5f;
     private Vector2 _movementInput;
-    // Assigned Controller Variables
+
+    // References
     private Rigidbody2D _rb;
     private Animator _animator;
+
+    // Attack variables
+    private float _aimLockTimer = 0f;
+    private float _aimLockDuration = 1f;
 
     void Awake()
     {
@@ -37,11 +42,26 @@ public class PlayerMovement : MonoBehaviour
         _movementInput = movementVector;
         _animator.SetFloat("Speed", movementVector.sqrMagnitude);
 
+        if(_aimLockTimer > 0f)
+        {
+            _aimLockTimer -= Time.deltaTime;
+        }
         // Only update facing direction if moving
-        if (movementVector != Vector2.zero)
+        else if (movementVector != Vector2.zero)
         {
             _animator.SetFloat("DirectionX", movementVector.x);
             _animator.SetFloat("DirectionY", movementVector.y);
         }
+    }
+
+    // Set direction the player is facing
+    public void SetFacingDirection(Vector2 dir)
+    {
+        if(dir == Vector2.zero) return;
+
+        _animator.SetFloat("DirectionX", dir.x);
+        _animator.SetFloat("DirectionY", dir.y);
+
+        _aimLockTimer = _aimLockDuration;
     }
 }

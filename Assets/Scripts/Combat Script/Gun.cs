@@ -9,8 +9,13 @@ public class Gun : MonoBehaviour
     [Header("Gun Animator")]
     [SerializeField] private Animator _gunanimator;
 
+    [Header("Gun Sprite Renderer")]
+    [SerializeField] private SpriteRenderer gunSr;
+
     // Internal Variables
     private Vector3 _firePointDefaultLocalPos;
+    private float lastShotTimer;
+    private float lastShotDuration = 1f;
 
     void Awake(){
         if(!_gunanimator){
@@ -19,6 +24,9 @@ public class Gun : MonoBehaviour
         if(firePoint == null){
             firePoint = transform.Find("FirePoint");
             _firePointDefaultLocalPos = firePoint.localPosition;
+        }
+        if(!gunSr){
+            gunSr = GetComponentInChildren<SpriteRenderer>();
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,7 +38,14 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!transform.parent)
+        {
+            gunSr.enabled = true;
+        }
+        else
+        {
+            CheckLastShot();
+        }
     }
 
     public Transform GetFirePoint(){
@@ -82,6 +97,30 @@ public class Gun : MonoBehaviour
         BulletScript bullet = bulletObj.GetComponent<BulletScript>();
         if(bullet != null){
             bullet.FireBullet(dir);
+        }
+
+        SetLastFire();
+    }
+
+    // Resets the duration of the last shot fired
+    void SetLastFire()
+    {
+        lastShotTimer = lastShotDuration;
+    }
+
+    // Checks last shot 
+    // If gun has not been shot in allocated time
+    // Do not render the sprite
+    void CheckLastShot()
+    {
+        if(lastShotTimer > 0)
+        {
+            lastShotTimer -= Time.deltaTime;
+            gunSr.enabled = true;
+        }
+        else
+        {
+            gunSr.enabled = false;
         }
     }
 }
