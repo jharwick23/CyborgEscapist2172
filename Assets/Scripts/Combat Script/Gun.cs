@@ -12,10 +12,17 @@ public class Gun : MonoBehaviour
     [Header("Gun Sprite Renderer")]
     [SerializeField] private SpriteRenderer gunSr;
 
+    [Header("UI Handler")] 
+    [SerializeField] private WeaponUI weaponUi; 
+
     // Internal Variables
     private Vector3 _firePointDefaultLocalPos;
     private float lastShotTimer;
     private float lastShotDuration = 1f;
+
+    // Ammo Variables
+    [SerializeField] private float currentAmmo;
+    [SerializeField] private float maxAmmo = 24f;
 
     void Awake(){
         if(!_gunanimator){
@@ -32,7 +39,11 @@ public class Gun : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if(!weaponUi)
+        {
+            weaponUi = GameObject.FindFirstObjectByType<WeaponUI>();
+        }
+        currentAmmo = maxAmmo;
     }
 
     // Update is called once per frame
@@ -46,6 +57,11 @@ public class Gun : MonoBehaviour
         {
             CheckLastShot();
         }
+
+        if(currentAmmo <= 0)
+        {
+            gunSr.enabled = false;
+        }
     }
 
     public Transform GetFirePoint(){
@@ -55,7 +71,11 @@ public class Gun : MonoBehaviour
     // Fire weapon
     public void Fire(GameObject bulletPrefab, PlayerCombat.FirePosition firePos)
     {
+        // Checks for references
         if(bulletPrefab == null || firePoint == null) return;
+
+        // Returns if ammo hits zero
+        if(currentAmmo <= 0) return;
 
         firePoint.localRotation = Quaternion.identity;
         firePoint.localPosition = _firePointDefaultLocalPos;
@@ -100,6 +120,13 @@ public class Gun : MonoBehaviour
         }
 
         SetLastFire();
+        currentAmmo--;
+        
+        if(weaponUi)
+        {
+            weaponUi.UpdateAmmo(currentAmmo);
+        }
+        Debug.Log(currentAmmo);
     }
 
     // Resets the duration of the last shot fired
