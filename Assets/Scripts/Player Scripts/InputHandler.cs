@@ -17,6 +17,12 @@ public class InputHandler : MonoBehaviour
 
     void Awake()
     {
+        _playerInput = GetComponent<PlayerInput>();
+        mainCam = Camera.main;
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
         if(_playerMovementController == null)
         {
             _playerMovementController = FindFirstObjectByType<PlayerMovement>();
@@ -25,12 +31,6 @@ public class InputHandler : MonoBehaviour
         {
             _playerCombat = FindFirstObjectByType<PlayerCombat>();
         }
-        _playerInput = GetComponent<PlayerInput>();
-        mainCam = Camera.main;
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
         if (_playerInput != null)
         {
             _moveAction = _playerInput.actions.FindAction("Move");

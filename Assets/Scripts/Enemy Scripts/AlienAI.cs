@@ -4,8 +4,8 @@ public class AlienAI : MonoBehaviour
 {
     // Variables for Alien
     [Header("Alien Variables")]
-    [SerializeField] private float moveSpeed = 1.5f;
-    [SerializeField] private float detectionRange = 2f;
+    [SerializeField] private float moveSpeed = 7.5f;
+    [SerializeField] private float detectionRange = 8f;
     [SerializeField] private float attackCooldown = 1f;
     private float attackTimer;
     private Vector2 moveDirection;

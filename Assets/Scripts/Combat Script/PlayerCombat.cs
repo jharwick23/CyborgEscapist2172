@@ -41,15 +41,18 @@ public class PlayerCombat : MonoBehaviour
         {
             _mainCamera = Camera.main;
         }
-        if(weaponInRange == null){
-            weaponInRange = FindFirstObjectByType<Gun>();
-        }
         if(weaponHolder == null){
             weaponHolder = transform.Find("WeaponHolder");
             _weaponHolderDefaultLocalPos = weaponHolder.localPosition;
         }
         if(!_animator){
             _animator = GetComponent<Animator>();
+        }
+    }
+
+    void Start(){
+        if(weaponInRange == null){
+            weaponInRange = FindFirstObjectByType<Gun>();
         }
     }
 

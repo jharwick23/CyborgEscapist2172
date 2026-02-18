@@ -7,20 +7,24 @@ public class PlayerHealth : MonoBehaviour
     private float currentHealth;
 
     // References
-    [SerializeField] HealthBarUI healthBar;
+    [SerializeField] private PlayerMovement playerMov;
+    [SerializeField] private SpriteRenderer playerSr;
 
     void Awake()
     {
-        if(!healthBar)
+        if(!playerMov)
         {
-            healthBar = FindFirstObjectByType<HealthBarUI>();
+            playerMov = GetComponent<PlayerMovement>();
+        }
+        if(!playerSr)
+        {
+            playerSr = GetComponent<SpriteRenderer>();
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentHealth = 5f;
-        healthBar.SetHealth(currentHealth, maxHealth);
     }
 
     // Update is called once per frame
@@ -35,15 +39,18 @@ public class PlayerHealth : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        //Debug.Log(playerHealth);
-        healthBar.SetHealth(currentHealth, maxHealth);
-
         if(currentHealth <= 0f)
         {
-            if(transform.parent != null)
-            {
-                Destroy(transform.parent.gameObject);
-            }
+            playerMov.enabled = false;
+            playerSr.enabled = false;
         }
+    }
+
+    public float GetPlayerCurrentHealth(){
+        return currentHealth;
+    }
+
+    public float GetPlayerMaxHealth(){
+        return maxHealth;
     }
 }
