@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Gun : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class Gun : MonoBehaviour
     // Ammo Variables
     [SerializeField] private float currentAmmo;
     [SerializeField] private float maxAmmo = 24f;
+
+    // Flags
+    private bool isReloading = false;
 
     void Awake(){
         if(!_gunanimator){
@@ -57,11 +61,6 @@ public class Gun : MonoBehaviour
         {
             CheckLastShot();
         }
-
-        if(currentAmmo <= 0)
-        {
-            gunSr.enabled = false;
-        }
     }
 
     public Transform GetFirePoint(){
@@ -73,9 +72,6 @@ public class Gun : MonoBehaviour
     {
         // Checks for references
         if(bulletPrefab == null || firePoint == null) return;
-
-        // Returns if ammo hits zero
-        if(currentAmmo <= 0) return;
 
         firePoint.localRotation = Quaternion.identity;
         firePoint.localPosition = _firePointDefaultLocalPos;
@@ -111,6 +107,16 @@ public class Gun : MonoBehaviour
 
         Vector2 dir = firePoint.right;
 
+        // Returns if ammo hits zero
+        // Or if reloading
+        // Sets last fire to make sure the gun still appears but it doesn't 
+        // Actually shoot bullets
+        if(currentAmmo <= 0 || isReloading)
+        {
+            SetLastFire();
+            return;
+        }
+
         // spawn bullet
         GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
@@ -126,7 +132,6 @@ public class Gun : MonoBehaviour
         {
             weaponUi.UpdateAmmo(currentAmmo);
         }
-        Debug.Log(currentAmmo);
     }
 
     // Resets the duration of the last shot fired
@@ -149,5 +154,31 @@ public class Gun : MonoBehaviour
         {
             gunSr.enabled = false;
         }
+    }
+
+    public void Reload()
+    {
+        if(!isReloading && currentAmmo != maxAmmo)
+        {
+            StartCoroutine(ReloadRoutine());
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    IEnumerator ReloadRoutine()
+    {
+        isReloading = true;
+        weaponUi.ShowReloading(true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        currentAmmo = maxAmmo;
+
+        isReloading = false;
+        weaponUi.ShowReloading(false);
+        weaponUi.UpdateAmmo(currentAmmo);
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class WeaponUI : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class WeaponUI : MonoBehaviour
     [SerializeField] private Image weapon;
     [SerializeField] private PlayerCombat playerCombat;
     [SerializeField] private TextMeshProUGUI ammoText;
+
+    // Couroutine Variable
+    private Coroutine reloadAnim;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,5 +40,31 @@ public class WeaponUI : MonoBehaviour
     public void UpdateAmmo(float ammo)
     {
         ammoText.text = ammo + " / ∞";
+    }
+
+    public void ShowReloading(bool state)
+    {
+        if(state)
+        {
+            reloadAnim = StartCoroutine(ReloadTextAnimation());
+        }
+        else
+        {
+            StopCoroutine(reloadAnim);
+        }
+    }
+
+    IEnumerator ReloadTextAnimation()
+    {
+        string baseText = "RELOADING";
+        int dots = 0;
+
+        while(true)
+        {
+            dots = (dots + 1) % 4;
+            ammoText.text = baseText + new string('.', dots);
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

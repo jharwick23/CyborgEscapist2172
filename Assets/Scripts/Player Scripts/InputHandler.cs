@@ -7,10 +7,16 @@ public class InputHandler : MonoBehaviour
     [Header("Player References")]
     [SerializeField] private PlayerMovement _playerMovementController;
     [SerializeField] private PlayerCombat _playerCombat;
+
+    // Weapon References
+    [Header("Weapon References")]
+    [SerializeField] private Gun _gun;
     
     // Input System
     private PlayerInput _playerInput;
-    private InputAction _moveAction, _firedownAction, _fireupAction, _fireleftAction, _firerightAction, _interactAction, _dropAction;
+    private InputAction _moveAction, _firedownAction, _fireupAction,
+                        _fireleftAction, _firerightAction, _interactAction, 
+                        _dropAction, _reloadAction;
 
     // Runtime variables
     private Camera mainCam;
@@ -31,6 +37,10 @@ public class InputHandler : MonoBehaviour
         {
             _playerCombat = FindFirstObjectByType<PlayerCombat>();
         }
+        if(!_gun)
+        {
+            _gun = FindFirstObjectByType<Gun>();
+        }
         if (_playerInput != null)
         {
             _moveAction = _playerInput.actions.FindAction("Move");
@@ -40,8 +50,11 @@ public class InputHandler : MonoBehaviour
             _firerightAction = _playerInput.actions.FindAction("FireRight");
             _interactAction = _playerInput.actions.FindAction("Interact");
             _dropAction = _playerInput.actions.FindAction("Drop");
+            _reloadAction = _playerInput.actions.FindAction("Reload");
+
             _dropAction.performed += OnDropPerformed;
             _interactAction.performed += OnInteractPerformed;
+            _reloadAction.performed += OnReloadPerformed;
         }
         else
         {
@@ -82,5 +95,10 @@ public class InputHandler : MonoBehaviour
 
     private void OnDropPerformed(InputAction.CallbackContext context){
         _playerCombat.DropWeapon();
+    }
+
+    private void OnReloadPerformed(InputAction.CallbackContext context)
+    {
+        _gun.Reload();
     }
 }
