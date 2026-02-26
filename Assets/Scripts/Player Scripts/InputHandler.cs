@@ -11,12 +11,16 @@ public class InputHandler : MonoBehaviour
     // Weapon References
     [Header("Weapon References")]
     [SerializeField] private Gun _gun;
+
+    // UI References
+    [Header("UI References")]
+    [SerializeField] private PauseMenu _pauseMenu;
     
     // Input System
     private PlayerInput _playerInput;
     private InputAction _moveAction, _firedownAction, _fireupAction,
                         _fireleftAction, _firerightAction, _interactAction, 
-                        _dropAction, _reloadAction;
+                        _dropAction, _reloadAction, _pauseAction;
 
     // Runtime variables
     private Camera mainCam;
@@ -41,6 +45,10 @@ public class InputHandler : MonoBehaviour
         {
             _gun = FindFirstObjectByType<Gun>();
         }
+        if(!_pauseMenu)
+        {
+            _pauseMenu = FindFirstObjectByType<PauseMenu>();
+        }
         if (_playerInput != null)
         {
             _moveAction = _playerInput.actions.FindAction("Move");
@@ -51,10 +59,10 @@ public class InputHandler : MonoBehaviour
             _interactAction = _playerInput.actions.FindAction("Interact");
             _dropAction = _playerInput.actions.FindAction("Drop");
             _reloadAction = _playerInput.actions.FindAction("Reload");
-
-            _dropAction.performed += OnDropPerformed;
-            _interactAction.performed += OnInteractPerformed;
-            _reloadAction.performed += OnReloadPerformed;
+            _pauseAction = _playerInput.actions.FindAction("Pause");
+            
+            _pauseAction.performed += OnPausePerformed;
+            EnableInputs();
         }
         else
         {
@@ -89,6 +97,30 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    public void EnableInputs()
+    {
+        _dropAction.performed += OnDropPerformed;
+        _interactAction.performed += OnInteractPerformed;
+        _reloadAction.performed += OnReloadPerformed;
+        _moveAction?.Enable();
+        _fireupAction?.Enable();
+        _firedownAction?.Enable();
+        _fireleftAction?.Enable();
+        _firerightAction?.Enable();
+    }
+
+    public void DisableInputs()
+    {
+        _dropAction.performed -= OnDropPerformed;
+        _interactAction.performed -= OnInteractPerformed;
+        _reloadAction.performed -= OnReloadPerformed;
+        _moveAction?.Disable();
+        _fireupAction?.Disable();
+        _firedownAction?.Disable();
+        _fireleftAction?.Disable();
+        _firerightAction?.Disable();
+    }
+
     private void OnInteractPerformed(InputAction.CallbackContext context){
         _playerCombat.EquipWeapon();
     }
@@ -100,5 +132,10 @@ public class InputHandler : MonoBehaviour
     private void OnReloadPerformed(InputAction.CallbackContext context)
     {
         _gun.Reload();
+    }
+
+    private void OnPausePerformed(InputAction.CallbackContext context)
+    {
+        _pauseMenu.PerformPause();
     }
 }
