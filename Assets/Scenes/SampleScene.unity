@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &75057285 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1794429161135772776, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
-  m_PrefabInstance: {fileID: 6088766219287566425}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &150623022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -692,10 +687,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1070712841471561958, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3933537330916042631, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 653.93243
@@ -736,17 +727,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4491263880083635811, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
-      propertyPath: controlsPanel
-      value: 
-      objectReference: {fileID: 75057285}
     - target: {fileID: 5547154675836698465, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
       propertyPath: m_Name
       value: PauseManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8183112240367095079, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
