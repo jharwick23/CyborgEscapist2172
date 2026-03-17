@@ -14,13 +14,13 @@ TagManager:
   - UI
   - Player
   - Weapons
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Bullet
+  - Ground
+  - Enemies
+  - Camerabounds
+  - Walls
+  - Objects-Col
+  - Objects-NoCol
   - 
   - 
   - 
@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Tiles
+    uniqueID: 3956316409
+    locked: 0
   - name: Projectiles
     uniqueID: 410510193
     locked: 0
@@ -50,6 +53,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1002341467
+    locked: 0
+  - name: Enemies
+    uniqueID: 3877382887
     locked: 0
   m_RenderingLayers:
   - Default
