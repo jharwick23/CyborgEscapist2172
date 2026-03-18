@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
     [Header("Player References")]
     [SerializeField] private PlayerMovement _playerMovementController;
     [SerializeField] private PlayerCombat _playerCombat;
+    [SerializeField] private Interactor _interactor;
 
     // Weapon References
     [Header("Weapon References")]
@@ -15,6 +16,7 @@ public class InputHandler : MonoBehaviour
     // UI References
     [Header("UI References")]
     [SerializeField] private PauseMenu _pauseMenu;
+
     
     // Input System
     private PlayerInput _playerInput;
@@ -29,18 +31,22 @@ public class InputHandler : MonoBehaviour
     {
         _playerInput = GetComponent<PlayerInput>();
         mainCam = Camera.main;
+        if(_playerMovementController == null)
+        {
+            _playerMovementController = GetComponent<PlayerMovement>();
+        }
+        if(_playerCombat == null)
+        {
+            _playerCombat = GetComponent<PlayerCombat>();
+        }
+        if(_interactor == null)
+        {
+            _interactor = GetComponent<Interactor>();
+        }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(_playerMovementController == null)
-        {
-            _playerMovementController = FindFirstObjectByType<PlayerMovement>();
-        }
-        if(_playerCombat == null)
-        {
-            _playerCombat = FindFirstObjectByType<PlayerCombat>();
-        }
         if(!_gun)
         {
             _gun = FindFirstObjectByType<Gun>();
@@ -122,7 +128,7 @@ public class InputHandler : MonoBehaviour
     }
 
     private void OnInteractPerformed(InputAction.CallbackContext context){
-        _playerCombat.EquipWeapon();
+        _interactor.TryInteract();
     }
 
     private void OnDropPerformed(InputAction.CallbackContext context){

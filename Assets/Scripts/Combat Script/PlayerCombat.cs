@@ -157,7 +157,7 @@ public class PlayerCombat : MonoBehaviour
     }
 
     // Try to equip the weapon
-    public void EquipWeapon()
+    public void EquipWeapon(Gun gun)
     {
         if(weaponInRange == null) return;
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Gun : MonoBehaviour
+public class Gun : MonoBehaviour, IInteractable
 {
     // References
     [Header("Weapon Setup")]
@@ -61,6 +61,23 @@ public class Gun : MonoBehaviour
         {
             CheckLastShot();
         }
+    }
+
+    public bool CanInteract()
+    {
+        return true;
+    }
+
+    public bool Interact(Interactor interactor)
+    {
+        PlayerCombat player = interactor.GetComponent<PlayerCombat>();
+        if(player)
+        {
+            player.EquipWeapon(this);
+            return true;
+        }
+
+        return false;
     }
 
     public Transform GetFirePoint(){
