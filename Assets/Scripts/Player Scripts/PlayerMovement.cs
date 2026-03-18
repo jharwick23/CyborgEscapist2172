@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
@@ -8,8 +9,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _movementInput;
 
     // References
-    private Rigidbody2D _rb;
-    private Animator _animator;
+    [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private TextMeshProUGUI interactionUI;
+    
+    // Flags
+    private bool isInteraction;
 
     // Attack variables
     private float _aimLockTimer = 0f;
@@ -27,7 +32,19 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        isInteraction = false;
+    }
+
+    void Update()
+    {
+        if(isInteraction)
+        {
+            interactionUI.enabled = true;
+        }
+        else
+        {
+            interactionUI.enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -63,5 +80,21 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetFloat("DirectionY", dir.y);
 
         _aimLockTimer = _aimLockDuration;
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.GetComponent<IInteractable>() != null)
+        {
+            isInteraction = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.GetComponent<IInteractable>() != null)
+        {
+            isInteraction = false;
+        }
     }
 }
