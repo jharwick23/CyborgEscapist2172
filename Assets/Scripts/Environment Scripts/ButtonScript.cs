@@ -6,10 +6,7 @@ public class ButtonScript : MonoBehaviour, IInteractable
 
     void Start()
     {
-        if(!door)
-        {
-            door = FindFirstObjectByType<DoorScript>();
-        }
+
     }
 
     public bool CanInteract()

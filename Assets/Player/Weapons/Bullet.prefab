@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1850739187227135281}
   - component: {fileID: 6022780453966322497}
   - component: {fileID: 3825328584738017386}
+  - component: {fileID: 6947220394337224435}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
@@ -168,3 +169,55 @@ CapsuleCollider2D:
   m_Offset: {x: -0.00039045094, y: 0.004367721}
   m_Size: {x: 0.084526226, y: 0.033804655}
   m_Direction: 1
+--- !u!114 &6947220394337224435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452264754071659444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 2
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.618
+  m_Color: {r: 0.21980947, g: 0.22485746, b: 1, a: 1}
+  m_Intensity: 9.98
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 00000000f998d0eb71e37718618e1b005b84be3be72a1ce7
+  m_LightCookieSprite: {fileID: 2208703988740019828, guid: 8ee91313c5fd8e179ab11189b6d6b4fa, type: 3}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: -0.0185, y: 0.013549998, z: 0}
+    m_Extent: {x: 0.50960004, y: 0.28135002, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 0.27
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.24
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.2883072, y: -0.027094603, z: 0}
+  - {x: 0.25041962, y: -0.005280733, z: 0}
+  - {x: 0.25216293, y: 0.040914774, z: 0}
+  - {x: -0.28726196, y: 0.054656267, z: 0}

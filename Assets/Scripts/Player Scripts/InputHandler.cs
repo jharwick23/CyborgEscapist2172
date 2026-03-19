@@ -79,11 +79,6 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_moveAction != null){
-            Vector2 movementVector = _moveAction.ReadValue<Vector2>();
-            _playerMovementController.Move(movementVector);    
-        }
-
         // Fire
         if(_playerCombat != null && (_fireupAction != null || _firedownAction != null || _fireleftAction != null || _firerightAction != null))
         {
@@ -100,6 +95,14 @@ public class InputHandler : MonoBehaviour
             if (_firerightAction.WasPressedThisFrame()){
                 _playerCombat.Fire(PlayerCombat.FirePosition.Right);
             }
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if(_moveAction != null){
+            Vector2 movementVector = _moveAction.ReadValue<Vector2>();
+            _playerMovementController.Move(movementVector);    
         }
     }
 

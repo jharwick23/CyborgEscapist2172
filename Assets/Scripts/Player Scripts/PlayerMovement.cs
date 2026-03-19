@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _rb.linearVelocity = _movementInput * moveSpeed;
+        _rb.linearVelocity = Vector2.ClampMagnitude(_movementInput, 1f) * moveSpeed;
     }
 
     // Move the character
