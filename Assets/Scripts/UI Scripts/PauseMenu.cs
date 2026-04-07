@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlsPanel;
     [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private PlayerHealth playerHealth;
 
     // Variables
     private bool isPaused = false;
@@ -24,6 +25,10 @@ public class PauseMenu : MonoBehaviour
         if(controlsPanel)
         {
             controlsPanel.SetActive(false);
+        }
+        if(!playerHealth)
+        {
+            playerHealth = FindFirstObjectByType<PlayerHealth>();
         }
 
         Time.timeScale = 1f;
@@ -64,6 +69,13 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;     
         isPaused = true;
         inputHandler.DisableInputs();
+    }
+
+    // Logic to restart the level
+    public void OnRestartLevel()
+    {
+        Resume();
+        playerHealth.Spawn();
     }
 
     void Resume()

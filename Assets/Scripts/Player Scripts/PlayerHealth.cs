@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     // References
     [SerializeField] private PlayerMovement playerMov;
     [SerializeField] private SpriteRenderer playerSr;
+    [SerializeField] private Deathmenu deathMenu;
 
     void Awake()
     {
@@ -24,7 +25,11 @@ public class PlayerHealth : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentHealth = 5f;
+        if(!deathMenu)
+        {
+            deathMenu = FindFirstObjectByType<Deathmenu>();
+        }
+        Spawn();
     }
 
     // Update is called once per frame
@@ -43,7 +48,31 @@ public class PlayerHealth : MonoBehaviour
         {
             playerMov.enabled = false;
             playerSr.enabled = false;
+
+            deathMenu.EnableDeathMenu();
         }
+    }
+
+    public void Spawn()
+    {
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("Spawnpoint");
+
+        if(spawnPoint != null)
+        {
+            transform.position = spawnPoint.transform.position;
+
+            if(playerMov.enabled == false)
+            {
+                playerMov.enabled = true;
+            }
+
+            if(playerSr.enabled == false)
+            {
+                playerSr.enabled = true;
+            }
+        }
+
+        currentHealth = maxHealth;
     }
 
     public float GetPlayerCurrentHealth(){
