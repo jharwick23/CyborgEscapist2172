@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private PlayerMovement playerMov;
     [SerializeField] private SpriteRenderer playerSr;
     [SerializeField] private Deathmenu deathMenu;
+    [SerializeField] private ShieldAbility shieldAbility;
 
     void Awake()
     {
@@ -29,6 +30,10 @@ public class PlayerHealth : MonoBehaviour
         {
             deathMenu = FindFirstObjectByType<Deathmenu>();
         }
+        if(!shieldAbility)
+        {
+            shieldAbility = FindFirstObjectByType<ShieldAbility>();
+        }
         Spawn();
     }
 
@@ -41,6 +46,8 @@ public class PlayerHealth : MonoBehaviour
     // Change the player's health
     public void ChangeHealth(float amount)
     {
+        if(shieldAbility.GetIsShielded()) return;
+
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 

@@ -8,6 +8,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private PlayerMovement _playerMovementController;
     [SerializeField] private PlayerCombat _playerCombat;
     [SerializeField] private Interactor _interactor;
+    [SerializeField] private ShieldAbility _shieldAbility;
 
     // Weapon References
     [Header("Weapon References")]
@@ -22,7 +23,7 @@ public class InputHandler : MonoBehaviour
     private PlayerInput _playerInput;
     private InputAction _moveAction, _firedownAction, _fireupAction,
                         _fireleftAction, _firerightAction, _interactAction, 
-                        _dropAction, _reloadAction, _pauseAction;
+                        _dropAction, _reloadAction, _pauseAction, _shieldAction;
 
     // Runtime variables
     private Camera mainCam;
@@ -55,6 +56,10 @@ public class InputHandler : MonoBehaviour
         {
             _pauseMenu = FindFirstObjectByType<PauseMenu>();
         }
+        if(!_shieldAbility)
+        {
+            _shieldAbility = FindFirstObjectByType<ShieldAbility>();
+        }
         if (_playerInput != null)
         {
             _moveAction = _playerInput.actions.FindAction("Move");
@@ -66,6 +71,7 @@ public class InputHandler : MonoBehaviour
             _dropAction = _playerInput.actions.FindAction("Drop");
             _reloadAction = _playerInput.actions.FindAction("Reload");
             _pauseAction = _playerInput.actions.FindAction("Pause");
+            _shieldAction = _playerInput.actions.FindAction("Shield");
             
             _pauseAction.performed += OnPausePerformed;
             EnableInputs();
@@ -111,6 +117,7 @@ public class InputHandler : MonoBehaviour
         _dropAction.performed += OnDropPerformed;
         _interactAction.performed += OnInteractPerformed;
         _reloadAction.performed += OnReloadPerformed;
+        _shieldAction.performed += OnShieldPerformed;
         _moveAction?.Enable();
         _fireupAction?.Enable();
         _firedownAction?.Enable();
@@ -123,6 +130,7 @@ public class InputHandler : MonoBehaviour
         _dropAction.performed -= OnDropPerformed;
         _interactAction.performed -= OnInteractPerformed;
         _reloadAction.performed -= OnReloadPerformed;
+        _shieldAction.performed -= OnShieldPerformed;
         _moveAction?.Disable();
         _fireupAction?.Disable();
         _firedownAction?.Disable();
@@ -146,5 +154,10 @@ public class InputHandler : MonoBehaviour
     private void OnPausePerformed(InputAction.CallbackContext context)
     {
         _pauseMenu.PerformPause();
+    }
+
+    private void OnShieldPerformed(InputAction.CallbackContext context)
+    {
+        _shieldAbility.ToggleShield();
     }
 }
