@@ -19240,6 +19240,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1794429161135772776, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3933537330916042631, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 653.93243
@@ -19283,6 +19287,39 @@ PrefabInstance:
     - target: {fileID: 5547154675836698465, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
       propertyPath: m_Name
       value: PauseManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8237496143257583317, guid: 104b0c38699b3995ea759e765099d21d, type: 3}
+      propertyPath: m_text
+      value: 'W - Move Upward
+
+        A - Move Leftward
+
+        S - Move Rightward
+
+        D
+        - Move Downward
+
+        E (Hold) - Interact/Equip Item/Weapon
+
+        G
+        (Hold) - Drop Item/Weapon
+
+        R - Reload
+
+        Q - Shield
+
+        C
+        - Change Weapon
+
+        Arrowkeyup - Shoot upward
+
+        Arrowkeyleft
+        - Shoot leftward
+
+        Arrowkeyright - Shoot rightward
+
+        Arrowkeydown
+        - Shoot downward'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19468,14 +19505,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3093985396168905420, guid: 2a1b875b7e5fe5a62b034ffead06491d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 130
-      objectReference: {fileID: 0}
-    - target: {fileID: 3093985396168905420, guid: 2a1b875b7e5fe5a62b034ffead06491d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -424
-      objectReference: {fileID: 0}
     - target: {fileID: 3556270647797716412, guid: 2a1b875b7e5fe5a62b034ffead06491d, type: 3}
       propertyPath: m_Pivot.x
       value: 0

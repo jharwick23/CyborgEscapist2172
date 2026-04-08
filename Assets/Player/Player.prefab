@@ -194,6 +194,8 @@ GameObject:
   - component: {fileID: 6736648317249453370}
   - component: {fileID: 556240968253235482}
   - component: {fileID: 563841957347939388}
+  - component: {fileID: 6444983722364213321}
+  - component: {fileID: 8823106077108373930}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -648,6 +650,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEnergy: {fileID: 0}
+  playerSr: {fileID: 0}
+--- !u!114 &6444983722364213321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5728805711542146591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37b957a155cecec1d9012eaac45c5018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8823106077108373930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5728805711542146591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e4366b32ee2f588af29e012cc13181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrapText: {fileID: 0}
 --- !u!1 &8642775024971590621
 GameObject:
   m_ObjectHideFlags: 0

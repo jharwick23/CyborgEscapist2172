@@ -6,8 +6,6 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private float _speed = 15f;
     [SerializeField] private float _lifetime = 3f;
 
-    [SerializeField] private DroppableScript dropService;
-
     private Rigidbody2D _rb;
 
     void Awake()
@@ -17,12 +15,7 @@ public class BulletScript : MonoBehaviour
 
     void Start()
     {
-        if(!dropService)
-        {
-            dropService = FindFirstObjectByType<DroppableScript>();
-        }
 
-        Debug.Log(dropService);
     }
 
     // shoots bullet out of gun direction facing wherever gun is facing
@@ -44,9 +37,7 @@ public class BulletScript : MonoBehaviour
             return;
         }
         if(other.gameObject.CompareTag("Enemy")){
-            Vector2 position = other.transform.position;
-            Destroy(other.gameObject);
-            dropService.Droppables(position);
+            other.gameObject.GetComponent<EnemyLogic>().DoDamage(1f);
         }
 
         Destroy(gameObject);

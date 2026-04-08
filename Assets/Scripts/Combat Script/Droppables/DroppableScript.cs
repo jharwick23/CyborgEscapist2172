@@ -20,7 +20,6 @@ public class DroppableScript : MonoBehaviour
 
     public void Droppables(Vector2 position)
     {
-        Debug.Log(position);
         float result = Random.Range(0, 2);
 
         if(result == 0 && repairKit != null)

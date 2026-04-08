@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 5389337884003512460}
   - component: {fileID: 2077506192542374732}
   - component: {fileID: 4978595492533522743}
+  - component: {fileID: 2151564175676775860}
   m_Layer: 0
   m_Name: AlienUFO_0
   m_TagString: Enemy
@@ -289,3 +290,18 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &2151564175676775860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7896978988541198460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78278e26b0eee0c088f3e031d575502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEnemyHealth: 0
+  maxEnemyHealth: 2
+  enemySr: {fileID: 0}
