@@ -58,5 +58,8 @@ TagManager:
   - name: Enemies
     uniqueID: 3877382887
     locked: 0
+  - name: Droppables
+    uniqueID: 4190240953
+    locked: 0
   m_RenderingLayers:
   - Default

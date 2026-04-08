@@ -3406,7 +3406,7 @@ MonoBehaviour:
   m_Intensity: 0.01
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000618e1b005b84be3b71e37718f998d0ebe72a1ce7
+  m_ApplyToSortingLayers: 00000000618e1b005b84be3b71e37718f998d0ebe72a1ce7b900c2f9
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -19016,10 +19016,6 @@ PrefabInstance:
       propertyPath: interactionUI
       value: 
       objectReference: {fileID: 1038784164}
-    - target: {fileID: 7574242462846565489, guid: be9c60ea1119bac40b07c6f436733c74, type: 3}
-      propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 8409052255330217024, guid: be9c60ea1119bac40b07c6f436733c74, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.7

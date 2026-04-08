@@ -24,7 +24,7 @@ public class PlayerEnergy : MonoBehaviour
     {
         if(shieldAbility.GetIsShielded())
         {
-            DecreaseEnergy(1f);
+            DecreaseEnergy(0.25f);
         }
 
         if(currentEnergy == 0f)
@@ -37,6 +37,12 @@ public class PlayerEnergy : MonoBehaviour
     void DecreaseEnergy(float amount)
     {
         currentEnergy -= amount;
+    }
+
+    // Increases player energy 
+    public void IncreaseEnergy(float amount)
+    {
+        currentEnergy += amount;
     }
 
     public float GetCurrentEnergy()
