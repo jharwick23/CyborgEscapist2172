@@ -15,10 +15,13 @@ public class EnergyCell : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Do not increase energy if full
-        if(other.GetComponent<PlayerEnergy>().GetCurrentEnergy() == other.GetComponent<PlayerEnergy>().GetMaxEnergy()) return;
+        if(other.gameObject.CompareTag("Player"))
+        {
+            // Do not increase energy if full
+            if(other.GetComponent<PlayerEnergy>().GetCurrentEnergy() == other.GetComponent<PlayerEnergy>().GetMaxEnergy()) return;
 
-        other.GetComponent<PlayerEnergy>().IncreaseEnergy(25f);
-        Destroy(gameObject);
+            other.GetComponent<PlayerEnergy>().IncreaseEnergy(25f);
+            Destroy(gameObject);
+        }
     }
 }
