@@ -25,32 +25,59 @@ public class WeaponUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerCombat.GetIsEquippedFlag())
+        Weapon currentWeapon = playerCombat.GetCurrentWeapon();
+
+        if(currentWeapon != null)
         {
             weapon.enabled = true;
-            ammoText.enabled = true;
+
+            // Set weapon icon
+            weapon.sprite = currentWeapon.GetWeaponIcon();
+
+            // Handle ammo visibility
+            if(currentWeapon.ShouldShowAmmo())
+            {
+                ammoText.enabled = true;
+
+                // Handle reloading state
+                if(currentWeapon.IsReloading())
+                {
+                    HandleReloadAnimation();
+                }
+                else
+                {
+                    StopReloadAnimation();
+                    ammoText.text = currentWeapon.GetAmmoText();
+                }
+            }
+            else
+            {
+                ammoText.enabled = false;
+                StopReloadAnimation();
+            }
         }
         else
         {
             weapon.enabled = false;
             ammoText.enabled = false;
+            StopReloadAnimation();
         }
     }
 
-    public void UpdateAmmo(float ammo)
+    void HandleReloadAnimation()
     {
-        ammoText.text = ammo + " / ∞";
-    }
-
-    public void ShowReloading(bool state)
-    {
-        if(state)
+        if(reloadAnim == null)
         {
             reloadAnim = StartCoroutine(ReloadTextAnimation());
         }
-        else
+    }
+
+    void StopReloadAnimation()
+    {
+        if(reloadAnim != null)
         {
             StopCoroutine(reloadAnim);
+            reloadAnim = null;
         }
     }
 

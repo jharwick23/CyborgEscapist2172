@@ -80,6 +80,9 @@ public class InputHandler : MonoBehaviour
         {
             Debug.LogWarning("PlayerInput component not found on GameObject.  Make sure an Input Actions asset or PlayerInput is present.");
         }
+
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -90,16 +93,16 @@ public class InputHandler : MonoBehaviour
         {
             // Single shot per click
             if (_fireupAction.WasPressedThisFrame()){
-                _playerCombat.Fire(PlayerCombat.FirePosition.Up);
+                _playerCombat.UseWeapon(PlayerCombat.FirePosition.Up);
             }
             if (_firedownAction.WasPressedThisFrame()){
-                _playerCombat.Fire(PlayerCombat.FirePosition.Down);
+                _playerCombat.UseWeapon(PlayerCombat.FirePosition.Down);
             }
             if (_fireleftAction.WasPressedThisFrame()){
-                _playerCombat.Fire(PlayerCombat.FirePosition.Left);
+                _playerCombat.UseWeapon(PlayerCombat.FirePosition.Left);
             }
             if (_firerightAction.WasPressedThisFrame()){
-                _playerCombat.Fire(PlayerCombat.FirePosition.Right);
+                _playerCombat.UseWeapon(PlayerCombat.FirePosition.Right);
             }
         }
     }
@@ -153,6 +156,7 @@ public class InputHandler : MonoBehaviour
 
     private void OnPausePerformed(InputAction.CallbackContext context)
     {
+        Cursor.lockState = CursorLockMode.None;
         _pauseMenu.PerformPause();
     }
 

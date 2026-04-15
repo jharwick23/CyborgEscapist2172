@@ -4,14 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerCombat : MonoBehaviour
 {
     // References
-    [Header("Projectile")]
-    [SerializeField] private GameObject _bulletPrefab;
-
     [Header("Weapon Setup")]
     [SerializeField] private Transform weaponHolder;
-
-    [Header("Firing Settings")]
-    [SerializeField] private float _timeBetweenFiring = 0.15f;
 
     [Header("Player Animator")]
     [SerializeField] private Animator _animator;
@@ -20,12 +14,11 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private PlayerMovement playerMov;
 
     // Runtime References
-    private Gun weaponInRange;
-    private Gun currentWeapon;
+    private Weapon weaponInRange;
+    private Weapon currentWeapon;
     private Camera _mainCamera;
 
     // Internal State
-    private float _firetimer;
     private FirePosition _currentFacing = FirePosition.None;
     private Vector3 _weaponHolderDefaultLocalPos;
 
@@ -61,18 +54,11 @@ public class PlayerCombat : MonoBehaviour
     }
 
     void Start(){
-        if(weaponInRange == null){
-            weaponInRange = FindFirstObjectByType<Gun>();
-        }
+
     }
 
     void Update()
     {
-        if(_firetimer > 0f)
-        {
-            _firetimer -= Time.deltaTime;
-        } 
-
         if(currentWeapon)
         {
             isEquipped = true;
@@ -83,38 +69,21 @@ public class PlayerCombat : MonoBehaviour
         }
     }
     
-    // InputHandler calls this when Fire is pressed
-    public void Fire(FirePosition firePos)
+    // InputHandler calls this when "Attack" is pressed
+    public void UseWeapon(FirePosition firePos)
     {
-        if(_firetimer > 0f) return;
-
-        if(_bulletPrefab == null || currentWeapon == null) return;
-
-        Transform weaponHolder = transform.Find("WeaponHolder");
+        if(currentWeapon == null) return;
+        if(!currentWeapon.CanUse()) return;
 
         // Positions weapon holder object based on where player is shooting
         if(_currentFacing != firePos){
             weaponHolder.localPosition = _weaponHolderDefaultLocalPos;
-            if(firePos == FirePosition.Left){
-                weaponHolder.localPosition += new Vector3(-0.25f, 0f, 0f);
-            }
-            if(firePos == FirePosition.Right){
-                weaponHolder.localPosition += new Vector3(0.25f, 0f, 0f);
-            }
-            if(firePos == FirePosition.Up){
-                weaponHolder.localPosition += new Vector3(0f, 0.5f, 0f);
-            }
-            if(firePos == FirePosition.Down){
-                weaponHolder.localPosition += new Vector3(0f, -0.5f, 0f);
-            }
-
+            currentWeapon.OnAim(firePos, weaponHolder);
             _currentFacing = firePos;
         }
 
-        // Spawns bullets and sets timer so you cannot fire too fast
-        currentWeapon.Fire(_bulletPrefab, firePos);
-
-        _firetimer = _timeBetweenFiring;
+        // Uses current weapon
+        currentWeapon.Use(firePos);
 
         Vector2 faceDir = Vector2.zero;
 
@@ -139,27 +108,27 @@ public class PlayerCombat : MonoBehaviour
     // Check if weapon is in range
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Gun gun = other.GetComponent<Gun>();
-        if(gun != null)
+        Weapon weapon = other.GetComponent<Weapon>();
+        if(weapon != null)
         {
-            weaponInRange = gun;
+            weaponInRange = weapon;
         }
     }
 
     // Lets Player object know object is no longer in range
     private void OnTriggerExit2D(Collider2D other)
     {
-        Gun gun = other.GetComponent<Gun>();
-        if(gun != null && weaponInRange == gun)
+        Weapon weapon = other.GetComponent<Weapon>();
+        if(weapon != null && weaponInRange == weapon)
         {
             weaponInRange = null;
         }
     }
 
     // Try to equip the weapon
-    public void EquipWeapon(Gun gun)
+    public void EquipWeapon(Weapon weapon)
     {
-        if(weaponInRange == null) return;
+        if(weapon == null) return;
 
         Transform weaponHolder = transform.Find("WeaponHolder");
         if(weaponHolder == null) return;
@@ -169,13 +138,13 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
-        currentWeapon = weaponInRange;
+        currentWeapon = weapon;
 
-        weaponInRange.transform.SetParent(weaponHolder);
-        weaponInRange.transform.localPosition = Vector3.zero;
-        weaponInRange.transform.localRotation = Quaternion.identity;
+        weapon.transform.SetParent(weaponHolder);
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
 
-        weaponInRange.GetComponent<Collider2D>().enabled = false;
+        weapon.GetComponent<Collider2D>().enabled = false;
 
         weaponInRange = null;
     }
@@ -208,5 +177,10 @@ public class PlayerCombat : MonoBehaviour
     public bool GetIsEquippedFlag()
     {
         return isEquipped;
+    }
+
+    public Weapon GetCurrentWeapon()
+    {
+        return currentWeapon;
     }
 }

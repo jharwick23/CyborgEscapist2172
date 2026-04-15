@@ -92,6 +92,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;     
         isPaused = false;
         inputHandler.EnableInputs();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnResumeButton()

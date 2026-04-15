@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class Gun : MonoBehaviour, IInteractable
+public class Gun : Weapon
 {
     // References
+    [Header("Bullet")]
+    [SerializeField] private GameObject _bulletPrefab;
+
     [Header("Weapon Setup")]
     [SerializeField] private Transform firePoint;
 
@@ -12,9 +15,6 @@ public class Gun : MonoBehaviour, IInteractable
 
     [Header("Gun Sprite Renderer")]
     [SerializeField] private SpriteRenderer gunSr;
-
-    [Header("UI Handler")] 
-    [SerializeField] private WeaponUI weaponUi; 
 
     // Internal Variables
     private Vector3 _firePointDefaultLocalPos;
@@ -43,16 +43,14 @@ public class Gun : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(!weaponUi)
-        {
-            weaponUi = GameObject.FindFirstObjectByType<WeaponUI>();
-        }
         currentAmmo = maxAmmo;
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if(!transform.parent)
         {
             gunSr.enabled = true;
@@ -63,32 +61,37 @@ public class Gun : MonoBehaviour, IInteractable
         }
     }
 
-    public bool CanInteract()
-    {
-        return true;
-    }
-
-    public bool Interact(Interactor interactor)
-    {
-        PlayerCombat player = interactor.GetComponent<PlayerCombat>();
-        if(player)
-        {
-            player.EquipWeapon(this);
-            return true;
-        }
-
-        return false;
-    }
-
     public Transform GetFirePoint(){
         return firePoint;
     }
 
+    // Sets aiming position
+    public override void OnAim(PlayerCombat.FirePosition firePos, Transform weaponHolder)
+    {
+        weaponHolder.localPosition = Vector3.zero;
+
+        switch(firePos)
+        {
+            case PlayerCombat.FirePosition.Left:
+                weaponHolder.localPosition += new Vector3(-0.25f, 0f, 0f);
+                break;
+            case PlayerCombat.FirePosition.Right:
+                weaponHolder.localPosition += new Vector3(0.25f, 0f, 0f);
+                break;
+            case PlayerCombat.FirePosition.Up:
+                weaponHolder.localPosition += new Vector3(0f, 0.5f, 0f);
+                break;
+            case PlayerCombat.FirePosition.Down:
+                weaponHolder.localPosition += new Vector3(0f, -0.5f, 0f);
+                break;
+        }
+    }
+
     // Fire weapon
-    public void Fire(GameObject bulletPrefab, PlayerCombat.FirePosition firePos)
+    public override void Use(PlayerCombat.FirePosition firePos)
     {
         // Checks for references
-        if(bulletPrefab == null || firePoint == null) return;
+        if(_bulletPrefab == null || firePoint == null) return;
 
         firePoint.localRotation = Quaternion.identity;
         firePoint.localPosition = _firePointDefaultLocalPos;
@@ -135,7 +138,7 @@ public class Gun : MonoBehaviour, IInteractable
         }
 
         // spawn bullet
-        GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        GameObject bulletObj = Instantiate(_bulletPrefab, firePoint.position, Quaternion.identity);
 
         BulletScript bullet = bulletObj.GetComponent<BulletScript>();
         if(bullet != null){
@@ -144,11 +147,8 @@ public class Gun : MonoBehaviour, IInteractable
 
         SetLastFire();
         currentAmmo--;
-        
-        if(weaponUi)
-        {
-            weaponUi.UpdateAmmo(currentAmmo);
-        }
+
+        ResetUseTimer();
     }
 
     // Resets the duration of the last shot fired
@@ -188,14 +188,26 @@ public class Gun : MonoBehaviour, IInteractable
     IEnumerator ReloadRoutine()
     {
         isReloading = true;
-        weaponUi.ShowReloading(true);
 
         yield return new WaitForSeconds(1.5f);
 
         currentAmmo = maxAmmo;
 
         isReloading = false;
-        weaponUi.ShowReloading(false);
-        weaponUi.UpdateAmmo(currentAmmo);
+    }
+
+    public override bool ShouldShowAmmo()
+    {
+        return true;
+    }
+
+    public override string GetAmmoText()
+    {
+        return currentAmmo + " / ∞";
+    }
+
+    public override bool IsReloading()
+    {
+        return isReloading;
     }
 }
