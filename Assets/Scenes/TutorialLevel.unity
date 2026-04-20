@@ -6747,8 +6747,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenUses: 5
   weaponIcon: {fileID: 7374725294872216382, guid: 982a60beb13a9459e8b6c9ce7bd3b1c2, type: 3}
---- !u!70 &1042228325
-CapsuleCollider2D:
+--- !u!58 &1042228325
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6782,8 +6782,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
-  m_Direction: 0
+  m_Radius: 0.5
 --- !u!1001 &1176727206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19321,7 +19320,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 520720911209662702, guid: 66a4179379118ab87bfe97a587d43899, type: 3}
       propertyPath: orthographic size
-      value: 0
+      value: 5.625
       objectReference: {fileID: 0}
     - target: {fileID: 1347042633638275073, guid: 66a4179379118ab87bfe97a587d43899, type: 3}
       propertyPath: m_Name

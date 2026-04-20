@@ -12,6 +12,9 @@ public class EnergySword : Weapon
     [Header("Capsule Collider")]
     [SerializeField] private CapsuleCollider2D col;
 
+    [Header("Player Combat")]
+    [SerializeField] private PlayerCombat playerCombat;
+
     // Internal Variables
     private float lastSwingTimer;
     private float lastSwingDuration = 1f;
@@ -32,7 +35,10 @@ public class EnergySword : Weapon
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        if(!playerCombat)
+        {
+            playerCombat = FindFirstObjectByType<PlayerCombat>();
+        }
     }
 
     // Update is called once per frame
@@ -116,26 +122,27 @@ public class EnergySword : Weapon
         {
             lastSwingTimer -= Time.deltaTime;
             swordSr.enabled = true;
+            col.enabled = true; // enable hitbox
         }
         else
         {
-            swordSr.enabled = false;
+            swordSr.enabled = false; 
+            col.enabled = false; // disable hitbox
         }
     }
 
     // Logic to hurt enemies 
     private void OnTriggerStay2D(Collider2D other)
     {
-        PlayerCombat player = GetComponent<PlayerCombat>();
-        if(player == null)
+        if(playerCombat == null)
         {
             Debug.Log("PlayerCombat does not exist!");
             return;
         }
 
         // Enemy only takes damage when the player is swinging the sword
-        if(other.gameObject.CompareTag("Enemy") && swordSr.enabled == true
-           && player.GetIsEquippedFlag()){
+        if(other.gameObject.CompareTag("Enemy") && col.enabled == true){
+            Debug.Log("Enemy stabbed");
             other.gameObject.GetComponent<EnemyLogic>().DoDamage(1f);
         }
     }

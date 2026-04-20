@@ -144,7 +144,7 @@ public class PlayerCombat : MonoBehaviour
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
 
-        weapon.GetComponent<Collider2D>().enabled = false;
+        weapon.GetComponent<CircleCollider2D>().enabled = false;
 
         weaponInRange = null;
     }
