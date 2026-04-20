@@ -23,7 +23,7 @@ public class PlayerCombat : MonoBehaviour
     private Vector3 _weaponHolderDefaultLocalPos;
 
     // Flags
-    private bool isEquipped = false;
+    protected bool isEquipped = false;
 
     // Enum for firing position
     public enum FirePosition{

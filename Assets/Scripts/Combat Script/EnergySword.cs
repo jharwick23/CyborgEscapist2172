@@ -9,6 +9,9 @@ public class EnergySword : Weapon
     [Header("Sword Sprite Renderer")]
     [SerializeField] private SpriteRenderer swordSr;
 
+    [Header("Capsule Collider")]
+    [SerializeField] private CapsuleCollider2D col;
+
     // Internal Variables
     private float lastSwingTimer;
     private float lastSwingDuration = 1f;
@@ -21,11 +24,15 @@ public class EnergySword : Weapon
         if(!swordSr){
             swordSr = GetComponentInChildren<SpriteRenderer>();
         }
+        if(!col)
+        {
+            col = GetComponent<CapsuleCollider2D>();
+        }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -33,6 +40,7 @@ public class EnergySword : Weapon
     {
         base.Update();
 
+        // Enables the sword sprite if "swung"
         if(!transform.parent)
         {
             swordSr.enabled = true;
@@ -51,21 +59,21 @@ public class EnergySword : Weapon
         switch(firePos)
         {
             case PlayerCombat.FirePosition.Left:
-                weaponHolder.localPosition += new Vector3(-0.25f, 0f, 0f);
+                weaponHolder.localPosition += new Vector3(-0.5f, 0f, 0f);
                 break;
             case PlayerCombat.FirePosition.Right:
-                weaponHolder.localPosition += new Vector3(0.25f, 0f, 0f);
+                weaponHolder.localPosition += new Vector3(0.5f, 0f, 0f);
                 break;
             case PlayerCombat.FirePosition.Up:
-                weaponHolder.localPosition += new Vector3(0f, 0.5f, 0f);
+                weaponHolder.localPosition += new Vector3(0f, 0.75f, 0f);
                 break;
             case PlayerCombat.FirePosition.Down:
-                weaponHolder.localPosition += new Vector3(0f, -0.5f, 0f);
+                weaponHolder.localPosition += new Vector3(0f, -0.75f, 0f);
                 break;
         }
     }
 
-    // Throw Grenade
+    // Stab Sword
     public override void Use(PlayerCombat.FirePosition firePos)
     {
         Debug.Log("StabSword");
@@ -89,7 +97,6 @@ public class EnergySword : Weapon
                 _swordanimator.SetFloat("DirectionY", 0);
                 break;
         }
-
         SetLastSwing();
         ResetUseTimer();
     }
@@ -113,6 +120,23 @@ public class EnergySword : Weapon
         else
         {
             swordSr.enabled = false;
+        }
+    }
+
+    // Logic to hurt enemies 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        PlayerCombat player = GetComponent<PlayerCombat>();
+        if(player == null)
+        {
+            Debug.Log("PlayerCombat does not exist!");
+            return;
+        }
+
+        // Enemy only takes damage when the player is swinging the sword
+        if(other.gameObject.CompareTag("Enemy") && swordSr.enabled == true
+           && player.GetIsEquippedFlag()){
+            other.gameObject.GetComponent<EnemyLogic>().DoDamage(1f);
         }
     }
 }
