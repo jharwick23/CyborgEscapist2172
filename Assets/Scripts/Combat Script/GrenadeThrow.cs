@@ -3,9 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class GrenadeThrow : MonoBehaviour
 {
+    // References
+    [SerializeField] private GameObject explosionVFX;
 
-    [SerializeField] private float _speed = 15f;
-    [SerializeField] private float _lifetime = 3f;
+    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _lifetime = 0.5f;
+    [SerializeField] private float explosionRadius = 2f;
+    [SerializeField] private float explosionDamage = 5f;
 
     private Rigidbody2D _rb;
 
@@ -35,19 +39,47 @@ public class GrenadeThrow : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
         
         _rb.linearVelocity = direction * _speed;
-        Destroy(gameObject, _lifetime);
+        Invoke(nameof(Explode), _lifetime); // Explodes after certain time if nothing hit
     }
 
     // Enemy hit with grenade
-    //private void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Droppables")){
-    //        return;
-    //    }
-    //    if(other.gameObject.CompareTag("Enemy")){
-    //        other.gameObject.GetComponent<EnemyLogic>().DoDamage(1f);
-    //    }
-//
-    //    Destroy(gameObject);
-    //}
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player") || other.CompareTag("Droppables"))
+            return;
+
+        if(other.CompareTag("Enemy") || 
+        other.CompareTag("Objects-Col") || 
+        other.CompareTag("Walls"))
+        {
+            Explode();
+        }
+    }
+
+    void Explode()
+    {
+        // Find all enemies in radius
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+
+        foreach (Collider2D hit in hits)
+        {
+            EnemyLogic enemy = hit.GetComponent<EnemyLogic>();
+            if (enemy != null)
+            {
+                enemy.DoDamage(explosionDamage);
+            }
+        }
+
+        if(explosionVFX != null)
+        {
+            Instantiate(explosionVFX, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
 }
