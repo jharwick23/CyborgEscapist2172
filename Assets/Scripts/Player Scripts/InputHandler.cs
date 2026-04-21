@@ -23,7 +23,8 @@ public class InputHandler : MonoBehaviour
     private PlayerInput _playerInput;
     private InputAction _moveAction, _firedownAction, _fireupAction,
                         _fireleftAction, _firerightAction, _interactAction, 
-                        _dropAction, _reloadAction, _pauseAction, _shieldAction;
+                        _dropAction, _reloadAction, _pauseAction, _shieldAction,
+                        _switchAction;
 
     // Runtime variables
     private Camera mainCam;
@@ -72,7 +73,8 @@ public class InputHandler : MonoBehaviour
             _reloadAction = _playerInput.actions.FindAction("Reload");
             _pauseAction = _playerInput.actions.FindAction("Pause");
             _shieldAction = _playerInput.actions.FindAction("Shield");
-            
+            _switchAction = _playerInput.actions.FindAction("SwitchWeapon");
+
             _pauseAction.performed += OnPausePerformed;
             EnableInputs();
         }
@@ -121,6 +123,7 @@ public class InputHandler : MonoBehaviour
         _interactAction.performed += OnInteractPerformed;
         _reloadAction.performed += OnReloadPerformed;
         _shieldAction.performed += OnShieldPerformed;
+        _switchAction.performed += OnSwitchPerformed;
         _moveAction?.Enable();
         _fireupAction?.Enable();
         _firedownAction?.Enable();
@@ -134,6 +137,7 @@ public class InputHandler : MonoBehaviour
         _interactAction.performed -= OnInteractPerformed;
         _reloadAction.performed -= OnReloadPerformed;
         _shieldAction.performed -= OnShieldPerformed;
+        _switchAction.performed -= OnSwitchPerformed;
         _moveAction?.Disable();
         _fireupAction?.Disable();
         _firedownAction?.Disable();
@@ -163,5 +167,10 @@ public class InputHandler : MonoBehaviour
     private void OnShieldPerformed(InputAction.CallbackContext context)
     {
         _shieldAbility.ToggleShield();
+    }
+
+    private void OnSwitchPerformed(InputAction.CallbackContext context)
+    {
+        _playerCombat.CycleWeapon();
     }
 }

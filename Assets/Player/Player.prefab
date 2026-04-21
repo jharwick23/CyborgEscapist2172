@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e97b3b83e1af49b5b8f97a8ff2aab38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponHolder: {fileID: 0}
+  weaponHolder: {fileID: 9054828655187859719}
   _animator: {fileID: 0}
   playerMov: {fileID: 0}
 --- !u!95 &5118999000448197035
@@ -550,8 +550,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: 0, y: 0.09283161}
+  m_Radius: 0.8911965
 --- !u!114 &2945575081001167633
 MonoBehaviour:
   m_ObjectHideFlags: 0

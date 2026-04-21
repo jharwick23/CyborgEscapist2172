@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -15,15 +16,13 @@ public class PlayerCombat : MonoBehaviour
 
     // Runtime References
     private Weapon weaponInRange;
-    private Weapon currentWeapon;
+    List<Weapon> weapons = new List<Weapon>();
+    int currentIndex = 0;
     private Camera _mainCamera;
 
     // Internal State
     private FirePosition _currentFacing = FirePosition.None;
     private Vector3 _weaponHolderDefaultLocalPos;
-
-    // Flags
-    protected bool isEquipped = false;
 
     // Enum for firing position
     public enum FirePosition{
@@ -59,20 +58,16 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
-        if(currentWeapon)
-        {
-            isEquipped = true;
-        }
-        else
-        {
-            isEquipped = false;
-        }
+        
     }
     
     // InputHandler calls this when "Attack" is pressed
     public void UseWeapon(FirePosition firePos)
     {
-        if(currentWeapon == null) return;
+        if(weapons.Count == 0) return;
+
+        Weapon currentWeapon = weapons[currentIndex];
+
         if(!currentWeapon.CanUse()) return;
 
         // Positions weapon holder object based on where player is shooting
@@ -130,16 +125,9 @@ public class PlayerCombat : MonoBehaviour
     {
         if(weapon == null) return;
 
-        Transform weaponHolder = transform.Find("WeaponHolder");
-        if(weaponHolder == null) return;
+        if(weapons.Contains(weapon)) return;
 
-        if(weaponHolder.childCount > 0)
-        {
-            return;
-        }
-
-        currentWeapon = weapon;
-
+        weapons.Add(weapon); // Add weapon to list and update parent
         weapon.transform.SetParent(weaponHolder);
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
@@ -147,40 +135,59 @@ public class PlayerCombat : MonoBehaviour
         weapon.GetComponent<CircleCollider2D>().enabled = false;
 
         weaponInRange = null;
+
+        if(weapons.Count == 1)
+        {
+            currentIndex = 0;
+            weapon.gameObject.SetActive(true);
+        }
+        else{
+            weapon.gameObject.SetActive(false);
+        }
+    }
+
+    public void CycleWeapon()
+    {
+        if (weapons.Count <= 1) return;
+
+        weapons[currentIndex].gameObject.SetActive(false);
+
+        currentIndex++;
+        if (currentIndex >= weapons.Count)
+            currentIndex = 0;
+
+        weapons[currentIndex].gameObject.SetActive(true);
     }
 
     // Drop the weapon
     public void DropWeapon()
     {
-        if(currentWeapon == null) return;
+        if (weapons.Count == 0) return;
+
+        Weapon currentWeapon = weapons[currentIndex];
+
+        weapons.RemoveAt(currentIndex);
 
         currentWeapon.transform.SetParent(null);
         currentWeapon.transform.position = transform.position + transform.right * 0.5f;
 
-        currentWeapon.GetComponent<Collider2D>().enabled = true;
+        currentWeapon.GetComponent<CircleCollider2D>().enabled = true;
 
-        currentWeapon = null;
-    }
+        if (weapons.Count == 0)
+        {
+            currentIndex = 0;
+            return;
+        }
 
-    // Return current fire position
-    public FirePosition GetCurrentFirePosition()
-    {
-        return _currentFacing;
-    }
+        if (currentIndex >= weapons.Count)
+            currentIndex = 0;
 
-    // Set current fire position
-    public void SetCurrentFirePosition(FirePosition firePos)
-    {
-        _currentFacing = firePos;
-    }
-
-    public bool GetIsEquippedFlag()
-    {
-        return isEquipped;
+        weapons[currentIndex].gameObject.SetActive(true);
     }
 
     public Weapon GetCurrentWeapon()
     {
-        return currentWeapon;
+        if (weapons.Count == 0) return null;
+        return weapons[currentIndex];
     }
 }

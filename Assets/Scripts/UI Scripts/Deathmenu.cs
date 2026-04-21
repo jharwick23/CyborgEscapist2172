@@ -29,6 +29,7 @@ public class Deathmenu : MonoBehaviour
     // Logic for pausing
     public void EnableDeathMenu()
     {
+        Cursor.lockState = CursorLockMode.None;
         if(deathPanel)
         {
             deathPanel.SetActive(true);
@@ -45,6 +46,7 @@ public class Deathmenu : MonoBehaviour
     // Logic to restart the level
     public void OnRestartLevel()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         RespawnResume();
         playerHealth.Spawn();
     }

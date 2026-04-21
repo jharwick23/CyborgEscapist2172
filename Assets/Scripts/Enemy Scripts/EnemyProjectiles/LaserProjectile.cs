@@ -35,9 +35,9 @@ public class LaserProjectile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
-
         if(playerHealth)
         {
+            Debug.Log("Laser hit: " + gameObject.name);
             playerHealth.ChangeHealth(-damage);
             Destroy(gameObject);
         }
