@@ -146,6 +146,8 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    // Cycle through the weapons
+    // Setting whichever one selected to active and setting previous to inactive
     public void CycleWeapon()
     {
         if (weapons.Count <= 1) return;
@@ -185,6 +187,7 @@ public class PlayerCombat : MonoBehaviour
         weapons[currentIndex].gameObject.SetActive(true);
     }
 
+    // Get current weapon
     public Weapon GetCurrentWeapon()
     {
         if (weapons.Count == 0) return null;

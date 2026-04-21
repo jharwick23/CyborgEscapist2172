@@ -117,6 +117,7 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    // Enables inputs for all actions
     public void EnableInputs()
     {
         _dropAction.performed += OnDropPerformed;
@@ -131,6 +132,7 @@ public class InputHandler : MonoBehaviour
         _firerightAction?.Enable();
     }
 
+    // Disables all inputs
     public void DisableInputs()
     {
         _dropAction.performed -= OnDropPerformed;
