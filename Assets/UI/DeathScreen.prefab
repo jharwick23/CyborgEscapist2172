@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2503752768158269552}
   - component: {fileID: 766912878197951922}
+  - component: {fileID: 3724739246743347939}
   m_Layer: 0
   m_Name: DeathScreen
   m_TagString: Untagged
@@ -48,6 +49,18 @@ MonoBehaviour:
   deathPanel: {fileID: 5819354089317086472}
   inputHandler: {fileID: 0}
   playerHealth: {fileID: 0}
+--- !u!114 &3724739246743347939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677450284358478437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b7ac7accffbd927b61dbec8cc69712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &884876534581927667
 PrefabInstance:
   m_ObjectHideFlags: 0

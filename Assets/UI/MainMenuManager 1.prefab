@@ -220,6 +220,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MainMenuManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 1624251019400808401, guid: 2995e42c847bfb471956e7ea8cf9f596, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -97
+      objectReference: {fileID: 0}
     - target: {fileID: 1652907244629462683, guid: 2995e42c847bfb471956e7ea8cf9f596, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0

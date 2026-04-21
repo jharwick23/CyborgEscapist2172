@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -88,5 +89,29 @@ public class PlayerHealth : MonoBehaviour
 
     public float GetPlayerMaxHealth(){
         return maxHealth;
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject spawn = GameObject.FindWithTag("Spawnpoint");
+
+        if (spawn != null)
+        {
+            transform.position = spawn.transform.position;
+        }
+        else
+        {
+            Debug.LogWarning("No spawn point found in scene!");
+        }
     }
 }

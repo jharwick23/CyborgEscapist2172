@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3080217552516963406}
   - component: {fileID: 6539757093443483911}
+  - component: {fileID: 1183757715903706442}
   m_Layer: 0
   m_Name: DropManager
   m_TagString: Untagged
@@ -46,3 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   repairKit: {fileID: 5023593284730492255, guid: 0b6f4c7328704a7a9be91e27d83cd4df, type: 3}
   energyCell: {fileID: 3370943581351752896, guid: 9b4329835669851cfa8b4bbdb02f72ba, type: 3}
+--- !u!114 &1183757715903706442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482472013555949963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b7ac7accffbd927b61dbec8cc69712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

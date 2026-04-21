@@ -18,6 +18,9 @@ public class EnemyLogic : MonoBehaviour
     // TODO: Possible cleaner way to do this will look into more later
     [SerializeField] private EnemyDoorScript enemydoor;
 
+    // Flags
+    private bool isDead = false;
+
     void Awake()
     {
         if(!enemySr)
@@ -46,6 +49,8 @@ public class EnemyLogic : MonoBehaviour
 
     public void DoDamage(float dmg)
     {
+        if(isDead) return;
+
         currentEnemyHealth -= dmg;
         StartCoroutine(FlashRed());
         
@@ -57,6 +62,9 @@ public class EnemyLogic : MonoBehaviour
 
     void DoDeath()
     {
+        if(isDead) return;
+        isDead = true;
+
         // TODO: make this more scalable
         // or maybe it is already?
         // Enemy object is removed from list on the enemy door script

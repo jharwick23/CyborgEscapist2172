@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3933537330916042631}
   - component: {fileID: 4491263880083635811}
+  - component: {fileID: 16155687872821489}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -49,6 +50,18 @@ MonoBehaviour:
   controlsPanel: {fileID: 1794429161135772776}
   inputHandler: {fileID: 0}
   playerHealth: {fileID: 0}
+--- !u!114 &16155687872821489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5547154675836698465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b7ac7accffbd927b61dbec8cc69712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3248652280032454364
 PrefabInstance:
   m_ObjectHideFlags: 0

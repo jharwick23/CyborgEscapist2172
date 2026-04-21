@@ -1,10 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class DontDestroyObject : MonoBehaviour
 {
-    [SerializeField] private string gameSceneName;
-
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,10 +16,5 @@ public class SceneLoader : MonoBehaviour
     void Update()
     {
         
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        SceneManager.LoadScene(gameSceneName);
     }
 }

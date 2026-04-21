@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 1624301850765035111}
   - component: {fileID: 6818058143703123909}
   - component: {fileID: 6145394187424171383}
+  - component: {fileID: 6693093415417574498}
   m_Layer: 0
   m_Name: EnergySword
   m_TagString: Untagged
@@ -290,3 +291,15 @@ MonoBehaviour:
   - {x: 0.0694739, y: -0.11995692, z: 0}
   - {x: 0.008641876, y: 0.49387935, z: 0}
   - {x: -0.04905701, y: 0.4925933, z: 0}
+--- !u!114 &6693093415417574498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8787167027356709661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b7ac7accffbd927b61dbec8cc69712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

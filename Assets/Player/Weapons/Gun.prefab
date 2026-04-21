@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 2178279684077914831}
   - component: {fileID: 6228903780795461666}
   - component: {fileID: 1085864886908540445}
+  - component: {fileID: 5718246259976190636}
   m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
@@ -142,6 +143,7 @@ MonoBehaviour:
   firePoint: {fileID: 4342305166103414010}
   _gunanimator: {fileID: 0}
   gunSr: {fileID: 0}
+  gunLight: {fileID: 0}
   currentAmmo: 0
   maxAmmo: 24
 --- !u!95 &2178279684077914831
@@ -258,6 +260,18 @@ MonoBehaviour:
   - {x: 0.23631191, y: 0.12182349, z: 0}
   - {x: 0.012086391, y: 0.15556252, z: 0}
   - {x: -0.27311516, y: 0.15105337, z: 0}
+--- !u!114 &5718246259976190636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5126228360507843658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b7ac7accffbd927b61dbec8cc69712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5420518746328442674
 GameObject:
   m_ObjectHideFlags: 0
