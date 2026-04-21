@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
 
 public class Gun : Weapon
 {
@@ -15,6 +16,8 @@ public class Gun : Weapon
 
     [Header("Gun Sprite Renderer")]
     [SerializeField] private SpriteRenderer gunSr;
+
+    [SerializeField] private Light2D gunLight;
 
     // Internal Variables
     private Vector3 _firePointDefaultLocalPos;
@@ -44,6 +47,11 @@ public class Gun : Weapon
     void Start()
     {
         currentAmmo = maxAmmo;
+
+        if(!gunLight)
+        {
+            gunLight = GetComponent<Light2D>();
+        }
     }
 
     // Update is called once per frame
@@ -54,9 +62,11 @@ public class Gun : Weapon
         if(!transform.parent)
         {
             gunSr.enabled = true;
+            if(gunLight) gunLight.enabled = true; 
         }
         else
         {
+            if(gunLight) gunLight.enabled = true; 
             CheckLastShot();
         }
     }

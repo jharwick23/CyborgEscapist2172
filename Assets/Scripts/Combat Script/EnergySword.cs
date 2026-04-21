@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class EnergySword : Weapon
 {
@@ -14,6 +15,8 @@ public class EnergySword : Weapon
 
     [Header("Player Combat")]
     [SerializeField] private PlayerCombat playerCombat;
+
+    [SerializeField] private Light2D swordLight;
 
     // Internal Variables
     private float lastSwingTimer;
@@ -31,6 +34,10 @@ public class EnergySword : Weapon
         {
             col = GetComponent<CapsuleCollider2D>();
         }
+        if(!swordLight)
+        {
+            swordLight = GetComponent<Light2D>();
+        }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,6 +46,8 @@ public class EnergySword : Weapon
         {
             playerCombat = FindFirstObjectByType<PlayerCombat>();
         }
+        _swordanimator.SetFloat("DirectionX", 0);
+        _swordanimator.SetFloat("DirectionY", 1);
     }
 
     // Update is called once per frame
@@ -50,9 +59,11 @@ public class EnergySword : Weapon
         if(!transform.parent)
         {
             swordSr.enabled = true;
+            if(swordLight) swordLight.enabled = true; 
         }
         else
         {
+            if(swordLight) swordLight.enabled = false;
             CheckLastSwing();
         }
     }
