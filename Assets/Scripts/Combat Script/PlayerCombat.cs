@@ -16,8 +16,8 @@ public class PlayerCombat : MonoBehaviour
 
     // Runtime References
     private Weapon weaponInRange;
-    List<Weapon> weapons = new List<Weapon>();
-    int currentIndex = 0;
+    private List<Weapon> weapons = new List<Weapon>();
+    private int currentIndex = 0;
     private Camera _mainCamera;
 
     // Internal State

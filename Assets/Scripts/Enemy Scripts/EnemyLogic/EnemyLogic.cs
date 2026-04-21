@@ -13,6 +13,10 @@ public class EnemyLogic : MonoBehaviour
     // References
     [SerializeField] private SpriteRenderer enemySr;
     [SerializeField] private DroppableScript dropService;
+    
+    // Only used in first level
+    // TODO: Possible cleaner way to do this will look into more later
+    [SerializeField] private EnemyDoorScript enemydoor;
 
     void Awake()
     {
@@ -53,6 +57,14 @@ public class EnemyLogic : MonoBehaviour
 
     void DoDeath()
     {
+        // TODO: make this more scalable
+        // or maybe it is already?
+        // Enemy object is removed from list on the enemy door script
+        if(enemydoor != null)
+        {
+            enemydoor.RemoveEnemy(this);
+        }
+
         Vector2 position = transform.position;
         Destroy(gameObject);
         dropService.Droppables(position);
