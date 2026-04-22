@@ -47,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
     // Change the player's health
     public void ChangeHealth(float amount)
     {
+        return;
         if(shieldAbility.GetIsShielded()) return;
 
         currentHealth += amount;

@@ -9,6 +9,9 @@ TagManager:
   - Droppables
   - Walls
   - Objects-Col
+  - UFOSpawner
+  - AlienSpawner
+  - BossSpawn
   layers:
   - Default
   - TransparentFX
@@ -57,6 +60,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1002341467
+    locked: 0
+  - name: Boss
+    uniqueID: 3919423085
     locked: 0
   - name: Enemies
     uniqueID: 3877382887

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -20,7 +21,10 @@ public class PlayerInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(amountScrap == 1)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
     public void IncreaseScrap(float amt)

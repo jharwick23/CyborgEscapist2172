@@ -24,6 +24,8 @@ public class LaserProjectile : MonoBehaviour
         }
         Vector3 direction = player.position - transform.position;
         rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
+
+        Destroy(gameObject, 3f);
     }
 
     // Update is called once per frame

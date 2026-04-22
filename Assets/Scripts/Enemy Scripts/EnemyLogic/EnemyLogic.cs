@@ -21,7 +21,7 @@ public class EnemyLogic : MonoBehaviour
     // Flags
     private bool isDead = false;
 
-    void Awake()
+    protected virtual void Awake()
     {
         if(!enemySr)
         {
@@ -30,7 +30,7 @@ public class EnemyLogic : MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         if(!dropService)
         {
@@ -60,9 +60,9 @@ public class EnemyLogic : MonoBehaviour
         }
     }
 
-    void DoDeath()
+    protected virtual void DoDeath()
     {
-        if(isDead) return;
+        if (isDead) return;
         isDead = true;
 
         // TODO: make this more scalable
@@ -85,5 +85,10 @@ public class EnemyLogic : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         enemySr.color = defaultColor;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentEnemyHealth;
     }
 }
